@@ -1,36 +1,86 @@
 # BÀI 2: Tối Ưu Hóa Prompt Đặc Tả Yêu Cầu Chức Năng
 
-## Prompt đã tối ưu
+## Prompt hoàn chỉnh
 
-```text
-Vai trò (Role):
-Bạn là một Senior Business Analyst có kinh nghiệm xây dựng tài liệu Software Requirements Specification (SRS) cho các hệ thống thương mại điện tử sử dụng JWT Authentication và Role-Based Access Control (RBAC).
+### 1. Vai trò (Role)
 
-Mục tiêu (Goal):
-Hãy xây dựng tài liệu Functional Requirements cho chức năng Đăng nhập (Login) của dự án Shop AI.
+Bạn là một **Senior Business Analyst / System Analyst** có hơn 10 năm kinh nghiệm trong việc xây dựng tài liệu SRS cho các hệ thống thương mại điện tử sử dụng **Spring Boot**, **JWT Authentication** và **RBAC (Role-Based Access Control)**.
 
-Ngữ cảnh (Context):
-Hệ thống Shop AI sử dụng JWT để xác thực người dùng và RBAC để phân quyền truy cập. Người dùng đăng nhập bằng email/tên đăng nhập và mật khẩu. Sau khi xác thực thành công, hệ thống phát hành JWT Token để sử dụng cho các yêu cầu tiếp theo. Quyền truy cập của người dùng được xác định dựa trên vai trò được gán trong hệ thống.
+### 2. Mục tiêu (Goal)
 
-Ràng buộc (Constraints):
-- Đặc tả đầy đủ luồng đăng nhập thành công.
-- Mô tả rõ dữ liệu đầu vào, dữ liệu đầu ra và điều kiện tiền đề.
-- Bắt buộc mô tả cách hệ thống xử lý các trường hợp ngoại lệ sau:
-  1. Người dùng nhập sai mật khẩu quá 5 lần liên tiếp.
-  2. JWT Token hết hạn trong khi phiên làm việc đang diễn ra.
-  3. Tài khoản có trạng thái Inactive nhưng vẫn cố gắng đăng nhập.
-- Mô tả phản hồi lỗi tương ứng cho từng trường hợp.
-- Không bỏ sót các yêu cầu bảo mật liên quan đến JWT và RBAC.
+Hãy xây dựng tài liệu **Functional Requirements** cho chức năng **Authentication - Login** của dự án **Shop AI**.
 
-Định dạng đầu ra (Output Format):
-Trình bày theo cấu trúc Functional Requirements gồm:
-1. Chức năng
-2. Mô tả nghiệp vụ
-3. Tiền điều kiện (Pre-conditions)
-4. Luồng chính (Main Flow)
-5. Luồng ngoại lệ (Exception Flow)
-6. Dữ liệu đầu vào
-7. Dữ liệu đầu ra
-8. Quy tắc nghiệp vụ (Business Rules)
-9. Yêu cầu bảo mật (Security Requirements)
-```
+Tài liệu phải mô tả đầy đủ quy trình xác thực người dùng, cấp phát JWT Token, kiểm tra quyền truy cập theo RBAC và xử lý các tình huống ngoại lệ thường gặp trong môi trường thực tế.
+
+### 3. Ngữ cảnh (Context)
+
+Shop AI là một nền tảng thương mại điện tử cho phép người dùng đăng nhập bằng email và mật khẩu đã đăng ký.
+
+Sau khi xác thực thành công:
+
+- Hệ thống tạo JWT Access Token.
+- Người dùng sử dụng token này để truy cập các API được bảo vệ.
+- Quyền truy cập được xác định thông qua mô hình RBAC.
+- Hệ thống hiện có các vai trò: USER, STAFF và ADMIN.
+
+Tài liệu cần mô tả:
+
+- Mục tiêu nghiệp vụ của chức năng đăng nhập.
+- Luồng xác thực người dùng.
+- Cơ chế sinh và sử dụng JWT.
+- Quy trình xác thực JWT ở các request tiếp theo.
+- Cơ chế phân quyền theo RBAC.
+- Các yêu cầu bảo mật liên quan đến Authentication.
+
+### 4. Ràng buộc (Constraints)
+
+Bắt buộc mô tả chi tiết các trường hợp ngoại lệ sau:
+
+#### Trường hợp 1: Sai mật khẩu quá 5 lần
+
+- Hệ thống phát hiện như thế nào.
+- Tài khoản có bị khóa tạm thời hay không.
+- Thời gian khóa đề xuất.
+- Mã lỗi và thông báo trả về.
+
+#### Trường hợp 2: JWT Token hết hạn
+
+- Cách hệ thống phát hiện token hết hạn.
+- HTTP Status Code trả về.
+- Nội dung phản hồi lỗi.
+- Hành động tiếp theo người dùng cần thực hiện.
+
+#### Trường hợp 3: Tài khoản Inactive
+
+- Thời điểm kiểm tra trạng thái tài khoản.
+- Cách từ chối đăng nhập.
+- Mã lỗi và thông báo phản hồi.
+
+Ngoài ra:
+
+- Không sinh mã nguồn Java.
+- Không mô tả chi tiết implementation.
+- Chỉ tập trung vào đặc tả nghiệp vụ.
+- Các trường hợp ngoại lệ phải được mô tả riêng trong mục Exception Flow.
+- Bổ sung các yêu cầu bảo mật liên quan đến JWT, RBAC và Account Lockout.
+
+### 5. Định dạng đầu ra (Output Format)
+
+Trình bày theo chuẩn SRS doanh nghiệp:
+
+1. Functional Requirement Overview
+2. Business Objective
+3. Actors
+4. Pre-conditions
+5. Main Flow
+6. Post-conditions
+7. Exception Flow
+   - Wrong Password (> 5 Attempts)
+   - Expired JWT Token
+   - Inactive Account Login Attempt
+
+8. Security Requirements
+9. Business Rules
+10. Assumptions & Notes
+
+Sử dụng văn phong chuyên nghiệp, rõ ràng, dễ đọc và phù hợp với tài liệu SRS thực tế của doanh nghiệp.
